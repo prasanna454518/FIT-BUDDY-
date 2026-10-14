@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}FitBuddy – Generate Your Plan{% endblock %}
+{% block content %}
+<section class="hero">
+  <div>
+    <p class="eyebrow">AI FITNESS PLANNER</p>
+    <h1>Build a 7-day plan that fits <span>you.</span></h1>
+    <p class="lead">Tell FitBuddy your goal and preferred intensity. Gemini creates a structured workout plan and a practical nutrition/recovery tip.</p>
+  </div>
+  <div class="hero-card">🏋️<br><small>Workout + Nutrition + Feedback</small></div>
+</section>
+
+<section class="card">
+  <h2>Your details</h2>
+  <form method="post" action="/generate-workout" class="grid-form">
+    <label>Name
+      <input name="username" required minlength="2" maxlength="100" placeholder="e.g. Alex">
+    </label>
+    <label>User ID
+      <input name="user_id" required pattern="[A-Za-z0-9_-]+" maxlength="64" placeholder="e.g. alex01">
+    </label>
+    <label>Age
+      <input name="age" type="number" min="13" max="100" required>
+    </label>
+    <label>Weight (kg)
+      <input name="weight" type="number" min="20" max="400" step="0.1" required>
+    </label>
+    <label>Fitness goal
+      <select name="goal" required>
+        <option value="weight loss">Weight loss</option>
+        <option value="muscle gain">Muscle gain</option>
+        <option value="general wellness">General wellness</option>
+        <option value="flexibility">Flexibility</option>
+      </select>
+    </label>
+    <label>Workout intensity
+      <select name="intensity" required>
+        <option value="low">Low</option>
+        <option value="medium" selected>Medium</option>
+        <option value="high">High</option>
+      </select>
+    </label>
+    <button class="btn primary full" type="submit">Generate My 7-Day Plan →</button>
+  </form>
+  <p class="fine-print">Tip: Use a unique User ID so your plan can be reopened later.</p>
+</section>
+{% endblock %}

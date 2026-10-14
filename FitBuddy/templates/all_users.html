@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}FitBuddy – Admin Dashboard{% endblock %}
+{% block content %}
+<div class="page-heading">
+  <p class="eyebrow">ADMIN DASHBOARD</p>
+  <h1>All users & plans</h1>
+  <p class="lead">{{ users|length }} registered user(s).</p>
+</div>
+
+<div class="admin-actions">
+  <form method="post" action="/admin/logout"><button class="btn secondary" type="submit">Log out</button></form>
+</div>
+
+{% if users %}
+  {% for user in users %}
+  {% set plan = plans[user.user_id] %}
+  <article class="card admin-card">
+    <div class="admin-head">
+      <div>
+        <h2>{{ user.username }}</h2>
+        <p class="muted">ID: {{ user.user_id }} · Age: {{ user.age }} · {{ user.weight }} kg · {{ user.goal.title() }} · {{ user.intensity.title() }}</p>
+      </div>
+      <form method="post" action="/admin/delete/{{ user.user_id }}" onsubmit="return confirm('Delete this user and their plan?')">
+        <button class="btn danger" type="submit">Delete</button>
+      </form>
+    </div>
+    {% if plan %}
+      <details>
+        <summary>Original plan</summary>
+        <pre class="plan compact">{{ plan.original_plan }}</pre>
+      </details>
+      {% if plan.updated_plan %}
+      <details open>
+        <summary>Updated plan</summary>
+        <pre class="plan compact">{{ plan.updated_plan }}</pre>
+      </details>
+      <p><strong>Feedback:</strong> {{ plan.feedback }}</p>
+      {% endif %}
+      <p><strong>Nutrition tip:</strong> {{ plan.nutrition_tip }}</p>
+    {% endif %}
+  </article>
+  {% endfor %}
+{% else %}
+  <div class="card"><p>No users yet.</p></div>
+{% endif %}
+{% endblock %}

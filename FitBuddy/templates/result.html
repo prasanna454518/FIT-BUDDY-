@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}FitBuddy – Your Plan{% endblock %}
+{% block content %}
+<section class="page-heading">
+  <p class="eyebrow">YOUR PERSONAL PLAN</p>
+  <h1>Hey {{ user.username }} 👋</h1>
+  <p class="lead">Goal: <strong>{{ user.goal.title() }}</strong> · Intensity: <strong>{{ user.intensity.title() }}</strong></p>
+  <div class="chips">
+    <span>Age {{ user.age }}</span><span>{{ user.weight }} kg</span><span>ID {{ user.user_id }}</span>
+  </div>
+</section>
+
+<section class="card">
+  {% if updated %}<div class="badge">Updated from feedback</div>{% endif %}
+  <h2>7-Day Workout Plan</h2>
+  <pre class="plan">{{ workout_plan }}</pre>
+</section>
+
+<section class="card tip-card">
+  <h2>🥗 Nutrition / Recovery Tip</h2>
+  <p>{{ nutrition_tip }}</p>
+</section>
+
+<section class="card">
+  <h2>Refine your plan</h2>
+  <p class="muted">Examples: “more focus on cardio”, “include more rest days”, or “replace jumping exercises”.</p>
+  <form method="post" action="/submit-feedback">
+    <input type="hidden" name="user_id" value="{{ user.user_id }}">
+    <textarea name="feedback" required minlength="3" maxlength="2000" rows="5" placeholder="What would you like to change?"></textarea>
+    <button class="btn primary" type="submit">Update Plan with AI →</button>
+  </form>
+</section>
+
+<div class="actions">
+  <a class="btn secondary" href="/">Create another plan</a>
+  <a class="btn secondary" href="/plan/{{ user.user_id }}">Refresh saved plan</a>
+</div>
+
+{% if original_plan %}
+<details class="card">
+  <summary>View original plan</summary>
+  <pre class="plan">{{ original_plan }}</pre>
+</details>
+{% endif %}
+{% endblock %}

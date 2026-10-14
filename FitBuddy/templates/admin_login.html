@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}FitBuddy – Admin Login{% endblock %}
+{% block content %}
+<section class="card narrow">
+  <p class="eyebrow">ADMIN</p>
+  <h1>Dashboard login</h1>
+  <form method="post" action="/admin/login">
+    <label>Username<input name="username" required autocomplete="username"></label>
+    <label>Password<input name="password" type="password" required autocomplete="current-password"></label>
+    <button class="btn primary full" type="submit">Sign in</button>
+  </form>
+</section>
+{% endblock %}
